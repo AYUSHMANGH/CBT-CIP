@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventLitez - Simple Event Listing</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="glass-header">
+                <h1 class="animated-heading"><i class="fas fa-calendar-alt pulse-icon"></i> <span class="letter-animate">E</span><span class="letter-animate">v</span><span class="letter-animate">e</span><span class="letter-animate">n</span><span class="letter-animate">t</span><span class="letter-animate">L</span><span class="letter-animate">i</span><span class="letter-animate">t</span><span class="letter-animate">e</span><span class="letter-animate">z</span></h1>
+                <p>Your simple event management solution</p>
+            </div>
+            <div class="header-particles"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-section">
+            <h2><i class="fas fa-plus-circle"></i> Create New Event</h2>
+            <form id="event-form">
+                <div class="form-group">
+                    <label for="event-name">Event Name</label>
+                    <input type="text" id="event-name" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date</label>
+                    <input type="date" id="event-date" required>
+                    <span class="error-message" id="date-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="event-time">Time</label>
+                    <input type="time" id="event-time" required>
+                    <span class="error-message" id="time-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Location</label>
+                    <input type="text" id="event-location" required>
+                    <span class="error-message" id="location-error"></span>
+                </div>
+                <button type="submit" class="btn-submit">Add Event</button>
+            </form>
+        </section>
+
+        <section class="events-section">
+            <h2><i class="fas fa-calendar-check"></i> Upcoming Events</h2>
+            <div id="events-container" class="events-grid">
+                <!-- Event cards will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 EventLitez. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Add particle animation to header
+        function createParticle() {
+            const header = document.querySelector('.header-particles');
+            const particle = document.createElement('span');
+            particle.classList.add('particle');
+            
+            // Random position, size and animation duration
+            const size = Math.random() * 8 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            header.appendChild(particle);
+            
+            // Remove particle after animation completes
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+        
+        // Create particles at intervals
+        setInterval(createParticle, 300);
+        
+        // Add initial particles
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createParticle, i * 200);
+        }
+        
+        // Track mouse movement for body glow effect
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth * 100;
+            const y = e.clientY / window.innerHeight * 100;
+            document.body.style.setProperty('--x', `${x}%`);
+            document.body.style.setProperty('--y', `${y}%`);
+        });
+        
+        // Add glowing effect to event cards on hover
+        const eventContainer = document.getElementById('events-container');
+        eventContainer.addEventListener('mouseover', (e) => {
+            if (e.target.closest('.event-card')) {
+                const card = e.target.closest('.event-card');
+                card.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3), 0 0 30px rgba(46, 204, 113, 0.6)';
+            }
+        });
+        
+        eventContainer.addEventListener('mouseout', (e) => {
+            if (e.target.closest('.event-card')) {
+                const card = e.target.closest('.event-card');
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 300);
+            }
+        });
+        
+        // Letter animation for heading
+        document.querySelectorAll('.letter-animate').forEach((letter, index) => {
+            letter.style.animationDelay = `${index * 0.1}s`;
+        });
+        
+        // Add 3D tilt effect to glass elements
+        const glassElements = document.querySelectorAll('.glass-header, .form-section, .event-card');
+        
+        glassElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                element.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+                element.style.boxShadow = `0 5px 15px rgba(0, 0, 0, 0.3), ${angleY/2}px ${angleX/2}px 15px rgba(46, 204, 113, 0.3)`;
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+                element.style.boxShadow = '';
+                setTimeout(() => {
+                    element.style.transition = '';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
