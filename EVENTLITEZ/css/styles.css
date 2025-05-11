@@ -1,4 +1,4 @@
-/* Base Styles */
+
 :root {
     --primary-color: #2ecc71;
     --secondary-color: #27ae60;
@@ -50,7 +50,6 @@ body::after {
     padding: 0 15px;
 }
 
-/* Header Styles */
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
     color: white;
@@ -93,7 +92,6 @@ header .container {
     z-index: 2;
 }
 
-/* Glass header */
 .glass-header {
     background: rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(10px);
@@ -131,7 +129,6 @@ header .container {
     transition: all 0.75s ease;
 }
 
-/* Letter animations */
 .animated-heading {
     display: inline-block;
 }
@@ -171,7 +168,7 @@ header p {
     opacity: 0.9;
 }
 
-/* Form Styles */
+
 .form-section {
     background-color: rgba(30, 30, 30, 0.7);
     backdrop-filter: blur(10px);
